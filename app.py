@@ -8,7 +8,7 @@ st.write(
     " puntuación de gasto."
 )
 
-# Cargar el modelo que subiste a GitHub (asegúrate de que el nombre coincida)
+# Cargar el modelo que subiste a GitHub
 try:
   model = joblib.load("modelo.joblib")
   modelo_cargado = True
@@ -20,9 +20,6 @@ annual_income = st.slider("Ingresos Anuales (k$)", 10, 140, 50)
 spending_score = st.slider("Puntuación de Gasto (1-100)", 1, 100, 50)
 
 if modelo_cargado:
-  # Hacer la predicción con los datos del usuario
-  # Nota: si entrenaste tu K-Means con un DataFrame que tenga los nombres de columnas,
-  # puedes pasarlo como DataFrame o como lista doble [[annual_income, spending_score]]
   datos_usuario = [[annual_income, spending_score]]
   cluster_predicho = model.predict(datos_usuario)[0]
 
