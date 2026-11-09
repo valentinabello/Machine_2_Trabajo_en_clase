@@ -24,15 +24,12 @@ if modelo_cargado:
   try:
     # Verificamos si lo cargado es un diccionario
     if isinstance(objeto_cargado, dict):
-      st.write("Contenido detectado en el diccionario:", list(objeto_cargado.keys()))
-      # Buscamos el modelo dentro de las llaves comunes
       model = None
       for k in ["model", "modelo", "kmeans", "KMeans"]:
         if k in objeto_cargado:
           model = objeto_cargado[k]
           break
       if model is None:
-        # Si no tiene esos nombres, tomamos el primer valor que tenga un método predict
         for val in objeto_cargado.values():
           if hasattr(val, "predict"):
             model = val
