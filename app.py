@@ -1,5 +1,4 @@
 import joblib
-import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 
@@ -9,11 +8,29 @@ st.write(
     " puntuación de gasto."
 )
 
+# Cargar el modelo que subiste a GitHub (asegúrate de que el nombre coincida)
+try:
+  model = joblib.load("modelo.joblib")
+  modelo_cargado = True
+except Exception as e:
+  modelo_cargado = False
+
 # Sliders para que el profe mueva los valores y pruebe
 annual_income = st.slider("Ingresos Anuales (k$)", 10, 140, 50)
 spending_score = st.slider("Puntuación de Gasto (1-100)", 1, 100, 50)
 
-# Aquí puedes cargar tu modelo cuando lo tengas conectado
-# model = joblib.load('modelo.joblib')
+if modelo_cargado:
+  # Hacer la predicción con los datos del usuario
+  # Nota: si entrenaste tu K-Means con un DataFrame que tenga los nombres de columnas,
+  # puedes pasarlo como DataFrame o como lista doble [[annual_income, spending_score]]
+  datos_usuario = [[annual_income, spending_score]]
+  cluster_predicho = model.predict(datos_usuario)[0]
 
-st.write(f"El cliente pertenece al clúster: **Ejemplo Clúster 1**")
+  st.success(
+      f"El cliente pertenece al clúster: **Clúster {cluster_predicho}**"
+  )
+else:
+  st.warning(
+      "No se pudo cargar el archivo modelo.joblib. Revisa el nombre en"
+      " GitHub."
+  )
